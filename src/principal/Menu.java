@@ -8,5 +8,9 @@ public abstract class Menu {
     public static void hello(UserInterface ui) {
         ui.output("Hello world!");
     }
-
+    // TODO Inserir aluno
+    // TODO Inserir disciplina
+    // TODO Adicionar nota na avaliação
+    // TODO Calcular média
+    // TODO Listar todos os alunos com as suas disciplinas e médias (aritmética e ponderada) com resultado final (aprovado >= 7, reprovado < 7)
 }

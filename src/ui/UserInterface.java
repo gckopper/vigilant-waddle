@@ -18,6 +18,9 @@ public abstract class UserInterface {
     protected long inputLong()  throws NumberFormatException {
         return 0;
     }
+    protected double inputDouble()  throws NumberFormatException {
+        return 0.0;
+    }
     public void output(String text) {}
     public String question(boolean lock, String prompt, String... acceptable) {
         String answer;
