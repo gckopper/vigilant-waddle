@@ -11,12 +11,22 @@ public class Menu {
     private ArrayList<Aluno> alunos = new ArrayList<>();
     private ArrayList<Disciplina> disciplinas = new ArrayList<>();
 
-    @MenuName("Hello world")
+    @MenuName("to string")
     public void hello(UserInterface ui) {
         ui.output(this.toString());
     }
-    // TODO Inserir aluno
-    // TODO Inserir disciplina
+    @MenuName("Inserir aluno")
+    public void adicionaAluno(UserInterface ui) {
+        String nome = ui.question("Qual o nome do aluno");
+        long codigo = ui.question("Qual o código do aluno", Long.MAX_VALUE, 0);
+        alunos.add(new Aluno(nome, codigo));
+    }
+    @MenuName("Inserir disciplina")
+    public void adicionaDisciplina(UserInterface ui) {
+        String nome = ui.question("Qual o nome do aluno");
+        long codigo = ui.question("Qual o código do aluno", Long.MAX_VALUE, 0);
+        disciplinas.add(new Disciplina(nome, codigo));
+    }
     // TODO Adicionar nota na avaliação
     // TODO Calcular média
     // TODO Listar todos os alunos com as suas disciplinas e médias (aritmética e ponderada) com resultado final (aprovado >= 7, reprovado < 7)
