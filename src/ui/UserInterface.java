@@ -2,6 +2,7 @@ package ui;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public abstract class UserInterface {
@@ -108,12 +109,15 @@ public abstract class UserInterface {
     }
 
     public void autoMenu(Class<?> menuClass) {
+        autoMenu(menuClass, null);
+    }
+
+    public void autoMenu(Class<?> menuClass, Object object) {
         Method[] methods = filter(menuClass.getMethods());
-        String[] opcoes = new String[methods.length + 1];
-        for (int i = 0; i < opcoes.length - 1; i++) {
-            opcoes[i] = methods[i].getAnnotation(MenuName.class).value();
+        if (methods == null || methods.length == 0) {
+            output(configBundle.getString("NoMethods"));
         }
-        opcoes[opcoes.length - 1] = configBundle.getString("LeaveKey");
+        String[] opcoes = opcoes(methods);
         int input;
         while (true) {
             input = menu(opcoes);
@@ -123,13 +127,14 @@ public abstract class UserInterface {
             Method method = methods[input];
             try {
                 if (method.getParameterCount() == 0) {
-                    method.invoke(null);
+                    method.invoke(object);
                     continue;
                 }
                 if (method.getParameterCount() == 1 && UserInterface.class.isAssignableFrom(method.getParameterTypes()[0])) {
-                    method.invoke(null, this);
+                    method.invoke(object, this);
                     continue;
                 }
+                throw new IllegalArgumentException();
             } catch (IllegalAccessException e) {
                 output(String.format("%s%s%s", configBundle.getString("ErrorPermisionKey"), e, configBundle.getString("ErrorMsgEnd")));
             } catch (IllegalArgumentException e) {
@@ -138,6 +143,15 @@ public abstract class UserInterface {
                 output(String.format("%s%s%s", configBundle.getString("ErrorTargetKey"), e, configBundle.getString("ErrorMsgEnd")));
             }
         } 
+    }
+
+    private static String[] opcoes(Method[] methods) {
+        String[] opcoes = new String[methods.length + 1];
+        for (int i = 0; i < opcoes.length - 1; i++) {
+            opcoes[i] = methods[i].getAnnotation(MenuName.class).value();
+        }
+        opcoes[opcoes.length - 1] = configBundle.getString("LeaveKey");
+        return opcoes;
     }
 
     private static Method[] filter(Method[] methods) {
@@ -149,9 +163,11 @@ public abstract class UserInterface {
             }
         }
         Method[] result = new Method[size];
-        for (int i = 0; i < result.length; i++) {
+        int j = 0;
+        for (int i = 0; i < methods.length; i++) {
             if (methods[i] != null) {
-                result[i] = methods[i];
+                result[j] = methods[i];
+                j++;
             }
         }
         return result;
