@@ -12,6 +12,13 @@ public class AlunoTeste {
     }
 
     @Test
+    void testAdiciona3Notas() {
+        assertTrue(ALUNO.adicionaNota(0, new Disciplina("testAdiciona3Notas", 2)));
+        assertTrue(ALUNO.adicionaNota(0, new Disciplina("testAdiciona3Notas", 2)));
+        assertFalse(ALUNO.adicionaNota(0, new Disciplina("testAdiciona3Notas", 2)));
+    }
+
+    @Test
     void testProcuraNota() {
         Disciplina disciplina = new Disciplina("testProcuraNota", 1);
         ALUNO.adicionaNota(8, disciplina);
