@@ -35,6 +35,11 @@ public class TUI extends UserInterface{
     }
 
     @Override
+    protected double inputDouble() throws NumberFormatException {
+        return Double.parseDouble(inputLine());
+    }
+
+    @Override
     public void output(String text) {
         System.out.println(text);
     }

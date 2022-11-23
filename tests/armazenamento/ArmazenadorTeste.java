@@ -8,6 +8,18 @@ public class ArmazenadorTeste {
     private static final Armazenador<String> armazenador = new Armazenador<>(String.class, "testes.json");
     @Test   
     public void testaLeArquivoVazio() {
-        assertEquals("",armazenador.leArquivo("test"));
+        Armazenador<String> armazenador = new Armazenador<>(String.class, "vazio.json");
+        assertEquals("",armazenador.leArquivo());
     }  
+    @Test   
+    public void testaGuarda() {
+        armazenador.salvar("BATATA");
+    } 
+    @Test   
+    public void testaCarregar() {
+        String text = armazenador.carregar();
+        assertEquals("BATATA", text);
+    } 
+
+    
 }

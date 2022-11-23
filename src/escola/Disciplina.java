@@ -8,4 +8,18 @@ public class Disciplina {
         this.nome = nome;
         this.codigo = codigo;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public long getCodigo() {
+        return codigo;
+    }
+
+    @Override
+    public String toString() {
+        return nome + ' ' + '(' + codigo + ')';
+    }
+    
 }

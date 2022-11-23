@@ -2,7 +2,6 @@ package ui;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public abstract class UserInterface {
@@ -69,10 +68,29 @@ public abstract class UserInterface {
         } while (lock);
         return answer;
     }
+    public double question(boolean lock, String prompt, double ceiling, double floor) {
+        double answer = 0;
+        do {
+            output(prompt);
+            try {
+                answer = inputDouble();
+                if (answer <= ceiling && answer >= floor) {
+                    lock = false;
+                    break;
+                }
+            } catch (Exception e) {
+                output(configBundle.getString("NumberFormatException"));
+            }
+        } while (lock);
+        return answer;
+    }
     public String question(String prompt, String... acceptable) {
         return question(true, prompt, acceptable);
     }
     public int question(String prompt, int ceiling, int floor) {
+        return question(true, prompt, ceiling, floor);
+    }
+    public double question(String prompt, double ceiling, double floor) {
         return question(true, prompt, ceiling, floor);
     }
     public long question(String prompt, long ceiling, long floor) {

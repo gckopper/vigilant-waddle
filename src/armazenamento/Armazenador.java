@@ -24,7 +24,7 @@ public class Armazenador<T> {
     }
     public T carregar() {
         Gson gson = new Gson();
-        String arquivo = leArquivo(nome);
+        String arquivo = leArquivo();
         if (arquivo == "") {
             return null;
         }
@@ -32,12 +32,12 @@ public class Armazenador<T> {
         return objeto;
     }
 
-    public String leArquivo(String filename) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+    public String leArquivo() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(nome))) {
             return bufferedReaderToString(reader);
         } catch (FileNotFoundException e) {
             try {
-                File file = new File(filename);
+                File file = new File(nome);
                 file.createNewFile();
               } catch (IOException error) {
                 e.printStackTrace();
@@ -49,7 +49,7 @@ public class Armazenador<T> {
         return "";
     }
 
-    public String bufferedReaderToString(BufferedReader b) throws IOException {
+    private String bufferedReaderToString(BufferedReader b) throws IOException {
             StringBuilder stringBuilder = new StringBuilder();
             String line = null;
             while ((line = b.readLine()) != null) {
@@ -63,7 +63,7 @@ public class Armazenador<T> {
             return content;
     }
 
-    public void escrever(String content) {
+    private void escrever(String content) {
         try {
             FileWriter myWriter = new FileWriter(nome);
             myWriter.write(content);
