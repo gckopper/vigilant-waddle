@@ -21,7 +21,6 @@ public class Aluno {
                 return nota;
             }
         }
-        System.err.println("fuk");
         return null;
     }
 
